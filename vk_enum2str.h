@@ -1,8 +1,8 @@
 #ifndef VULKAN_ENUM_TO_STRING_H
 #define VULKAN_ENUM_TO_STRING_H
 #include <stdio.h>
-#include <vulkan/vulkan.h>
 #include <string.h>
+#include <vulkan/vulkan.h>
 
 static inline const char* vkEnumToString_PhysicalDeviceType(VkPhysicalDeviceType type)
 {
@@ -87,13 +87,13 @@ static inline const char* vkEnumToString_PresentModeKHR(VkPresentModeKHR mode)
     switch (mode)
     {
     case VK_PRESENT_MODE_IMMEDIATE_KHR:
-        return "Immediate"; // Frame is sent to display immediately. May cause tearing.
+        return "Immediate";  // Frame is sent to display immediately. May cause tearing.
     case VK_PRESENT_MODE_MAILBOX_KHR:
-        return "Mailbox"; // V-Sync without blocking. Lower latency than FIFO.
+        return "Mailbox";  // V-Sync without blocking. Lower latency than FIFO.
     case VK_PRESENT_MODE_FIFO_KHR:
-        return "FIFO"; // V-Sync (classic V-Blank sync). Guarantees no tearing.
+        return "FIFO";  // V-Sync (classic V-Blank sync). Guarantees no tearing.
     case VK_PRESENT_MODE_FIFO_RELAXED_KHR:
-        return "FIFO Relaxed"; // Like FIFO, but allows tearing if late.
+        return "FIFO Relaxed";  // Like FIFO, but allows tearing if late.
     default:
         return "Unknown VkPresentModeKHR";
     }
@@ -137,7 +137,7 @@ static inline const char* vkEnumToString_ColorSpaceKHR(VkColorSpaceKHR colorSpac
     switch (colorSpace)
     {
     case VK_COLOR_SPACE_SRGB_NONLINEAR_KHR:
-        return "SRGB_NONLINEAR (Common)"; // Standard display color space
+        return "SRGB_NONLINEAR (Common)";  // Standard display color space
     case VK_COLOR_SPACE_DISPLAY_P3_NONLINEAR_EXT:
         return "DISPLAY_P3_NONLINEAR";
     case VK_COLOR_SPACE_EXTENDED_SRGB_LINEAR_EXT:
@@ -154,25 +154,25 @@ static inline const char* vkEnumToString_ImageLayout(VkImageLayout layout)
     switch (layout)
     {
     case VK_IMAGE_LAYOUT_UNDEFINED:
-        return "UNDEFINED"; // Initial layout, content is undefined.
+        return "UNDEFINED";  // Initial layout, content is undefined.
     case VK_IMAGE_LAYOUT_GENERAL:
-        return "GENERAL"; // Arbitrary uses. Needed for shared/concurrent access.
+        return "GENERAL";  // Arbitrary uses. Needed for shared/concurrent access.
     case VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL:
-        return "COLOR_ATTACHMENT_OPTIMAL"; // Optimal for color attachment use.
+        return "COLOR_ATTACHMENT_OPTIMAL";  // Optimal for color attachment use.
     case VK_IMAGE_LAYOUT_DEPTH_STENCIL_ATTACHMENT_OPTIMAL:
-        return "DEPTH_STENCIL_ATTACHMENT_OPTIMAL"; // Optimal for depth/stencil write.
+        return "DEPTH_STENCIL_ATTACHMENT_OPTIMAL";  // Optimal for depth/stencil write.
     case VK_IMAGE_LAYOUT_DEPTH_STENCIL_READ_ONLY_OPTIMAL:
-        return "DEPTH_STENCIL_READ_ONLY_OPTIMAL"; // Optimal for depth/stencil read.
+        return "DEPTH_STENCIL_READ_ONLY_OPTIMAL";  // Optimal for depth/stencil read.
     case VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL:
-        return "SHADER_READ_ONLY_OPTIMAL"; // Optimal for sampling/input attachments.
+        return "SHADER_READ_ONLY_OPTIMAL";  // Optimal for sampling/input attachments.
     case VK_IMAGE_LAYOUT_TRANSFER_SRC_OPTIMAL:
-        return "TRANSFER_SRC_OPTIMAL"; // Optimal as a transfer source (copy command).
+        return "TRANSFER_SRC_OPTIMAL";  // Optimal as a transfer source (copy command).
     case VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL:
-        return "TRANSFER_DST_OPTIMAL"; // Optimal as a transfer destination (copy command).
+        return "TRANSFER_DST_OPTIMAL";  // Optimal as a transfer destination (copy command).
     case VK_IMAGE_LAYOUT_PREINITIALIZED:
-        return "PREINITIALIZED"; // Initial layout, content *may* be preserved.
+        return "PREINITIALIZED";  // Initial layout, content *may* be preserved.
     case VK_IMAGE_LAYOUT_PRESENT_SRC_KHR:
-        return "PRESENT_SRC_KHR"; // Optimal for presentation (displaying to screen).
+        return "PRESENT_SRC_KHR";  // Optimal for presentation (displaying to screen).
     default:
         return "Other/Unknown VkImageLayout";
     }
@@ -183,9 +183,9 @@ static inline const char* vkEnumToString_PipelineBindPoint(VkPipelineBindPoint b
     switch (bindPoint)
     {
     case VK_PIPELINE_BIND_POINT_GRAPHICS:
-        return "GRAPHICS"; // For rendering operations.
+        return "GRAPHICS";  // For rendering operations.
     case VK_PIPELINE_BIND_POINT_COMPUTE:
-        return "COMPUTE"; // For compute shader operations.
+        return "COMPUTE";  // For compute shader operations.
     default:
         return "Other/Unknown VkPipelineBindPoint";
     }
@@ -218,8 +218,8 @@ static inline const char* vkQueueFlagsToString(VkQueueFlags flags)
     // Note: static buffer to hold the result, thread safety is assumed to be handled externally
     // or through careful usage (like using it immediately).
     static char buffer[128];
-    buffer[0] = '\0'; // Clear the buffer
-    
+    buffer[0] = '\0';  // Clear the buffer
+
     if (flags & VK_QUEUE_GRAPHICS_BIT)
     {
         strcat(buffer, "GRAPHICS, ");
@@ -235,7 +235,7 @@ static inline const char* vkQueueFlagsToString(VkQueueFlags flags)
         strcat(buffer, "TRANSFER, ");
         flags &= ~VK_QUEUE_TRANSFER_BIT;
     }
-    
+
     if (flags & VK_QUEUE_SPARSE_BINDING_BIT)
     {
         strcat(buffer, "SPARSE_BINDING, ");
@@ -259,9 +259,12 @@ static inline const char* vkQueueFlagsToString(VkQueueFlags flags)
     }
 
     size_t len = strlen(buffer);
-    if (len > 2) {
+    if (len > 2)
+    {
         buffer[len - 2] = '\0';
-    } else if (len == 0) {
+    }
+    else if (len == 0)
+    {
         // Handle case where flags was 0 or contained unknown bits
         strcat(buffer, "None/Unknown");
     }
@@ -269,6 +272,171 @@ static inline const char* vkQueueFlagsToString(VkQueueFlags flags)
     return buffer;
 }
 
+// --- VkMemoryPropertyFlagBits to String (for individual bits) ---
+static inline const char* vkEnumToString_MemoryPropertyFlagBits(VkMemoryPropertyFlagBits bit)
+{
+    switch (bit)
+    {
+    case VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT:
+        return "DEVICE_LOCAL";  // Best performance, usually VRAM.
+    case VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT:
+        return "HOST_VISIBLE";  // Mappable by CPU.
+    case VK_MEMORY_PROPERTY_HOST_COHERENT_BIT:
+        return "HOST_COHERENT";  // Automatic cache sync (slower read/write).
+    case VK_MEMORY_PROPERTY_HOST_CACHED_BIT:
+        return "HOST_CACHED";  // Host reads are fast.
+    case VK_MEMORY_PROPERTY_LAZILY_ALLOCATED_BIT:
+        return "LAZILY_ALLOCATED";  // For transient attachment memory (render passes).
+    case VK_MEMORY_PROPERTY_PROTECTED_BIT:
+        return "PROTECTED";  // Used for DRM/Secure content.
+    case VK_MEMORY_PROPERTY_DEVICE_COHERENT_BIT_AMD:
+        return "DEVICE_COHERENT_AMD";  // Device cache control (AMD extension).
+    case VK_MEMORY_PROPERTY_DEVICE_UNCACHED_BIT_AMD:
+        return "DEVICE_UNCACHED_AMD";  // No device cache (AMD extension).
+    default:
+        return "Unknown_Memory_Bit";
+    }
+}
+
+// --- VkMemoryPropertyFlags to String (for bitmask) ---
+static inline const char* vkMemoryPropertiesToString(VkMemoryPropertyFlags flags)
+{
+    static char buffer[256];
+    buffer[0] = '\0';
+
+    // Check for common flags
+    if (flags & VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT)
+    {
+        strcat(buffer, "DEVICE_LOCAL, ");
+    }
+    if (flags & VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT)
+    {
+        strcat(buffer, "HOST_VISIBLE, ");
+    }
+    if (flags & VK_MEMORY_PROPERTY_HOST_COHERENT_BIT)
+    {
+        strcat(buffer, "HOST_COHERENT, ");
+    }
+    if (flags & VK_MEMORY_PROPERTY_HOST_CACHED_BIT)
+    {
+        strcat(buffer, "HOST_CACHED, ");
+    }
+    if (flags & VK_MEMORY_PROPERTY_LAZILY_ALLOCATED_BIT)
+    {
+        strcat(buffer, "LAZILY_ALLOCATED, ");
+    }
+    if (flags & VK_MEMORY_PROPERTY_PROTECTED_BIT)
+    {
+        strcat(buffer, "PROTECTED, ");
+    }
+
+    // Check for less common/extension flags (optional, but good for completeness)
+    if (flags & VK_MEMORY_PROPERTY_DEVICE_COHERENT_BIT_AMD)
+    {
+        strcat(buffer, "DEVICE_COHERENT_AMD, ");
+    }
+    if (flags & VK_MEMORY_PROPERTY_DEVICE_UNCACHED_BIT_AMD)
+    {
+        strcat(buffer, "DEVICE_UNCACHED_AMD, ");
+    }
+
+    // Remove trailing comma and space
+    size_t len = strlen(buffer);
+    if (len > 2)
+    {
+        buffer[len - 2] = '\0';
+    }
+    else if (len == 0)
+    {
+        strcat(buffer, "None/Unknown");
+    }
+
+    return buffer;
+}
+
+static inline const char* vkPhysicalDeviceFeaturesToString(VkPhysicalDeviceFeatures features)
+{
+    // Increased buffer size since we might list many features
+    static char buffer[1024];
+    buffer[0] = '\0';
+
+    int count = 0;
+
+#define CHECK_FEATURE(f)                                                                           \
+    if (features.f)                                                                                \
+    {                                                                                              \
+        if (count > 0)                                                                             \
+            strcat(buffer, ", ");                                                                  \
+        strcat(buffer, #f);                                                                        \
+        count++;                                                                                   \
+    }
+
+    // List of common/important features
+    CHECK_FEATURE(robustBufferAccess);
+    CHECK_FEATURE(fullDrawIndexUint32);
+    CHECK_FEATURE(imageCubeArray);
+    CHECK_FEATURE(independentBlend);
+    CHECK_FEATURE(geometryShader);
+    CHECK_FEATURE(tessellationShader);
+    CHECK_FEATURE(sampleRateShading);
+    CHECK_FEATURE(dualSrcBlend);
+    CHECK_FEATURE(logicOp);
+    CHECK_FEATURE(multiDrawIndirect);
+    CHECK_FEATURE(drawIndirectFirstInstance);
+    CHECK_FEATURE(depthClamp);
+    CHECK_FEATURE(depthBiasClamp);
+    CHECK_FEATURE(fillModeNonSolid);
+    CHECK_FEATURE(depthBounds);
+    CHECK_FEATURE(wideLines);
+    CHECK_FEATURE(largePoints);
+    CHECK_FEATURE(alphaToOne);
+    CHECK_FEATURE(multiViewport);
+    CHECK_FEATURE(samplerAnisotropy);
+    CHECK_FEATURE(textureCompressionETC2);
+    CHECK_FEATURE(textureCompressionASTC_LDR);
+    CHECK_FEATURE(textureCompressionBC);
+    CHECK_FEATURE(occlusionQueryPrecise);
+    CHECK_FEATURE(pipelineStatisticsQuery);
+    CHECK_FEATURE(vertexPipelineStoresAndAtomics);
+    CHECK_FEATURE(fragmentStoresAndAtomics);
+    CHECK_FEATURE(shaderTessellationAndGeometryPointSize);
+    CHECK_FEATURE(shaderImageGatherExtended);
+    CHECK_FEATURE(shaderStorageImageExtendedFormats);
+    CHECK_FEATURE(shaderStorageImageReadWithoutFormat);
+    CHECK_FEATURE(shaderStorageImageWriteWithoutFormat);
+    CHECK_FEATURE(shaderUniformBufferArrayDynamicIndexing);
+    CHECK_FEATURE(shaderSampledImageArrayDynamicIndexing);
+    CHECK_FEATURE(shaderStorageBufferArrayDynamicIndexing);
+    CHECK_FEATURE(shaderStorageImageArrayDynamicIndexing);
+    CHECK_FEATURE(shaderClipDistance);
+    CHECK_FEATURE(shaderCullDistance);
+    CHECK_FEATURE(shaderFloat64);
+    CHECK_FEATURE(shaderInt64);
+    CHECK_FEATURE(shaderInt16);
+    CHECK_FEATURE(variableMultisampleRate);
+    CHECK_FEATURE(inheritedQueries);
+
+#undef CHECK_FEATURE
+
+    if (count == 0)
+    {
+        // This should rarely happen for any functional device
+        strcat(buffer, "None Enabled/Base Features Only");
+    }
+
+    // The final result is a comma-separated list of enabled feature names.
+    return buffer;
+}
+static inline const char* vkDeviceToString(VkDevice device)
+{
+    static char buffer[128];
+
+    // Log the opaque handle value itself for debugging/tracking.
+    // Casting to void* is standard for printing opaque handles.
+    snprintf(buffer, sizeof(buffer), "VkDevice Handle: 0x%p", (void*)device);
+
+    return buffer;
+}
 static inline const char* vkPhysicalDeviceToString(VkPhysicalDevice device)
 {
     static char buffer[512];
@@ -286,10 +454,6 @@ static inline const char* vkPhysicalDeviceToString(VkPhysicalDevice device)
 
     return buffer;
 }
-
-
-
-
 
 #endif  // VULKAN_ENUM_TO_STRING_H
 
